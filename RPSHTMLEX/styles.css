@@ -9,3 +9,7 @@
 .lose{
     color: red;
 }
+
+.tie{
+    background-color: yellow;
+}

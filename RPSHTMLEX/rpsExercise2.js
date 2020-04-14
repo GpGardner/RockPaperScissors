@@ -1,4 +1,4 @@
-$(document).ready(console.log('hello'))
+// $(document).ready(console.log('hello'))
 
 const player1Div = $(`#player1Div`);
 const player1Score = $(`#player1Score`);
@@ -8,6 +8,9 @@ const player2Div = $(`#player2Div`);
 const player2Score = $(`#player2Score`);
 const player2Name = $(`#player2Name`);
 const player2Choice = $(`#player2Choice`);
+const runGameButton = $(`#runGameButton`);
+
+
 
 
 //Allows for the three different options
@@ -44,11 +47,11 @@ let player2 = new Player("Tia", 0);
 
 //Function to start the game, takes in two players. player1 and player 2 from above
 //also takes in the win total 
-playGame(player1, player2, 5)
 
 
 function playGame(player1, player2, winTotal) {
-
+  player1Div.removeClass();
+  player2Div.removeClass();
 
   //the player objects keep track of their own wins, if they are less than the win total we keep playing
 
@@ -96,8 +99,8 @@ function compare(player1, player2, player1Move, player2Move) {
   //the if statement for a tie
   if (player1Move == player2Move) {
     console.log(`Sorry you tied\n`);
-    player1Div.css({'background-color':'yellow'});
-    player2Div.css({'background-color':'yellow'});
+    player1Div.addClass('tie');
+    player2Div.addClass('tie');
     return
   }
 
