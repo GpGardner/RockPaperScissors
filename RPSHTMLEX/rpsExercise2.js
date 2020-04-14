@@ -1,36 +1,14 @@
+//Allows for the three different options
 var choice = ["rock", "paper", "scissors"];
 
-var name1 = {
-  name: "George",
-  wins: 0,
-  rps: getChoice(),
+//Creating a player class  "Object factory" to crank out different players
+function Player(name, wins) {
+  this.name = name;
+  this.wins = wins;
 };
 
-var name2 = {
-  name: "Name2",
-  wins: 0,
-  rps: getChoice(),
-};
-
-var name3 = {
-  name: "Name3",
-  wins: 0,
-  rps: getChoice(),
-};
-
-var nam4 = {
-  name: "Name4",
-  wins: 0,
-  rps: getChoice(),
-};
-
-function playGame(player1, player2) {
-  console.log(compare(player1, player2));
-  console.log(player1.name + " wins: " + player1.wins);
-  console.log(player2.name + " wins: " + player2.wins);
-}
-
-function getChoice() {
+//Assign a prototype accessible to all players if they call it.
+Player.prototype.play = function () {
   let rand = Math.random();
 
   if (rand < 0.34) {
@@ -40,107 +18,82 @@ function getChoice() {
   } else {
     return choice[2];
   }
-}
+};
 
-function compare(player1, player2) {
-  if (player1.rps == player2.rps) {
-    return (
-      player1.name +
-      " " +
-      player1.rps +
-      "\n" +
-      player2.name +
-      " " +
-      player2.rps +
-      "\nThe result is a tie!"
-    );
-  }
+//Creating a new player1 "George", 0 wins
+let player1 = new Player("George", 0);
 
-  if (player1.rps == "rock") {
-    if (player2.rps == "scissors") {
-      player1.wins++;
-      return (
-        player1.name +
-        " " +
-        player1.rps +
-        "\n" +
-        player2.name +
-        " " +
-        "\nThe result is you lose!"
-      );
-    } else {
-      player2.wins++;
-      return (
-        player1.name +
-        " " +
-        player1.rps +
-        "\n" +
-        player2.name +
-        " " +
-        "\nThe result is you win!"
-      );
-    }
-  }
+//Creating a new player2 "Tia", 0 wins
+let player2 = new Player("Tia", 0);
 
-  if (player1.rps == "paper") {
-    if (player2.rps == "rock") {
-      player1.wins++;
-      return (
-        player1.name +
-        " " +
-        player1.rps +
-        "\n" +
-        player2.name +
-        " " +
-        "\nThe result is you lose!"
-      );
-    } else {
-      player2.wins++;
-      return (
-        player1.name +
-        " " +
-        player1.rps +
-        "\n" +
-        player2.name +
-        " " +
-        "\nThe result is you win!"
-      );
-    }
-  }
+//Function to start the game, takes in two players. player1 and player 2 from above
+//also takes in the win total 
+playGame(player1, player2, 5)
 
-  if (player1.rps == "scissors") {
-    if (player2.rps == "paper") {
-      player1.wins++;
-      return (
-        player1.name +
-        " " +
-        player1.rps +
-        "\n" +
-        player2.name +
-        " " +
-        "\nThe result is you lose!"
-      );
-    } else {
-      player2.wins++;
-      return (
-        player1.name +
-        " " +
-        player1.rps +
-        "\n" +
-        player2.name +
-        " " +
-        "\nThe result is you win!"
-      );
-    }
+
+function playGame(player1, player2, winTotal) {
+
+  //the player objects keep track of their own wins, if they are less than the win total we keep playing
+
+  while(player1.wins < winTotal && player2.wins < winTotal) {
+    
+    //runs the compare function. Passes down the two player objects and runs the prototype function
+    //that function assigns them a move each time it gets run.
+    compare(player1, player2, player1.play(), player2.play());
+
+    //logs the wins for each player. if you use ` instead of ' you can use these handy variables instead
+    //of having to use concatenation
+    console.log(`${player1.name} - ${player1.wins} wins, ${player2.name} - ${player2.wins} wins\n`);
   }
 }
 
-//console.log('Great job! the ' + computer2 +  ' had ' + computerWin + '. The ' + player1.rps + ' had ' + playerWin);
 
-// console.log('Great job! the ' + computer2 +  ' had ' + computerWin + '. The ' + player1.rps + ' had ' + playerWin);
+//player1 obj, player2 obj, player1's move, player2's move. They are all passed down from the above function
+function compare(player1, player2, player1Move, player2Move) {
 
-// var player1.rps = getChoice();
-// var player2.rps = getChoice();
+  //prints out the name and the move choice
+  console.log(
+    `${player1.name}: ${player1Move}\n${player2.name}: ${player2Move}\n`
+  );
 
-// console.log(player1.rps + " you have " + playerWin);
-// console.log(computer2 + " you have " + computerWin);
+  //the if statement for a tie
+  if (player1Move == player2Move) {
+    return console.log(`Sorry you tied\n`);
+  }
+
+  //if statement if player1 has rock
+  //if player2 has scissors, else they have paper
+  if (player1Move == "rock") {
+    if (player2Move == "scissors") {
+      return player1.wins++;
+      // return player1;
+    } else {
+      return player2.wins++;
+      // return player2;
+    }
+  }
+
+  //if statement if player1 has scissors
+  //if player2 has paper, else they have rock
+  if (player1Move == "scissors") {
+    if (player2Move == "paper") {
+      return player1.wins++;
+      // return player1;
+    } else {
+      return player2.wins++;
+      // return player2;
+    }
+  }
+
+  //if statement if player1 has paper
+  //if player2 has rock, else they have scissors
+  if (player1Move == "paper") {
+    if (player2Move == "rock") {
+      return player1.wins++;
+      // return player1;
+    } else {
+      return player2.wins++;
+      // return player2;
+    }
+  }
+}
