@@ -1,3 +1,11 @@
 #player2Div {
     margin-top: 1rem;
 }
+
+.win{
+    color: green;
+}
+
+.lose{
+    color: red;
+}

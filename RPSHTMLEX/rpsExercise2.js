@@ -1,4 +1,5 @@
 $(document).ready(console.log('hello'))
+
 const player1Div = $(`#player1Div`);
 const player1Score = $(`#player1Score`);
 const player1Name = $(`#player1Name`);
@@ -48,6 +49,7 @@ playGame(player1, player2, 5)
 
 function playGame(player1, player2, winTotal) {
 
+
   //the player objects keep track of their own wins, if they are less than the win total we keep playing
 
   // while(player1.wins < winTotal && player2.wins < winTotal) {
@@ -70,13 +72,13 @@ function playGame(player1, player2, winTotal) {
 // }
 
 function oneWin(){
-  player1Div.css({'background-color' : 'green'});
-  player2Div.css({'background-color' : 'red'});
+  player1Div.addClass('win');
+  player2Div.addClass('lose')
 }
 
 function twoWin(){
-  player1Div.css({'background-color' : 'red'});
-  player2Div.css({'background-color' : 'green'});
+  player1Div.addClass('lose');
+  player2Div.addClass('win');
 }
 
 
@@ -96,6 +98,7 @@ function compare(player1, player2, player1Move, player2Move) {
     console.log(`Sorry you tied\n`);
     player1Div.css({'background-color':'yellow'});
     player2Div.css({'background-color':'yellow'});
+    return
   }
 
   //if statement if player1 has rock
